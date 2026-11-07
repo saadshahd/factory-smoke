@@ -1,0 +1,32 @@
+name: probe-b
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: without token (expect fail)
+        id: notoken
+        continue-on-error: true
+        uses: actions/download-artifact@v8
+        with:
+          name: hum-state
+          run-id: ${{ inputs.run_id }}
+          path: /tmp/notoken
+      - run: echo "notoken outcome=${{ steps.notoken.outcome }}"
+      - uses: actions/download-artifact@v8
+        with:
+          name: hum-state
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ github.workspace }}/restored
+      - run: |
+          find restored -type f | head; du -sh restored
+          grep -c pineapple-masked-word restored/*/*.jsonl || true
+          stat -c '%a' restored/*/*.jsonl

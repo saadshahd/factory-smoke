@@ -1,0 +1,22 @@
+name: probe-a
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          D="$HOME/.claude/projects/-home-runner-work-factory-smoke-factory-smoke"
+          mkdir -p "$D"
+          echo "::add-mask::pineapple-masked-word"
+          head -c 5000000 /dev/urandom | base64 > "$D/00000000-0000-4000-8000-000000000001.jsonl"
+          echo '{"word":"pineapple-masked-word"}' >> "$D/00000000-0000-4000-8000-000000000001.jsonl"
+          echo "log check: pineapple-masked-word"
+          ls -la "$D"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: hum-state
+          path: ~/.claude/projects
+          include-hidden-files: true
+          retention-days: 1
