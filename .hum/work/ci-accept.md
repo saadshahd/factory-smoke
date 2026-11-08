@@ -1,6 +1,6 @@
 ---
 title: Add the CI acceptance note
-state: ready
+state: done
 kind: docs
 ---
 
