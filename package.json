@@ -7,6 +7,7 @@
   },
   "devDependencies": {
     "@types/bun": "^1.3.14",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "@moo.md/hum": "file:vendor/moo.md-hum-0.1.0.tgz"
   }
 }

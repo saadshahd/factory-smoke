@@ -1,0 +1,16 @@
+name: hum on dispatch
+on:
+  repository_dispatch:
+    types:
+      - hum-wake
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+concurrency:
+  group: hum-wake
+  cancel-in-progress: false
+jobs:
+  wake:
+    uses: ./.github/workflows/hum-wake.yml
+    secrets: inherit

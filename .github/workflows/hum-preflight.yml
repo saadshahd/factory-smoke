@@ -1,0 +1,34 @@
+name: hum preflight
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install --frozen-lockfile
+      - run: npm install --global @anthropic-ai/claude-code@2.1.316
+      - run: |
+          claude plugin marketplace add saadshahd/moo.md
+          claude plugin install hope@moo.md
+      - run: claude --version && claude plugin list --json
+      - run: ./node_modules/.bin/hum help --json
+      - run: bun scripts/preflight.ts
+      - run: |
+          gh auth setup-git
+          git config --global user.name hum
+          git config --global user.email hum@moo.md
+          git clone -q "https://github.com/$GITHUB_REPOSITORY" "$RUNNER_TEMP/clone"
+          cd "$RUNNER_TEMP/clone"
+          git config --get user.email
+          git checkout -q -b hum/run/preflight
+          git push --dry-run origin hum/run/preflight

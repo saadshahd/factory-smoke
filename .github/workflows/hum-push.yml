@@ -1,0 +1,19 @@
+name: hum on item push
+on:
+  push:
+    branches:
+      - "**"
+      - "!hum/run/**"
+    paths:
+      - .hum/work/**
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+concurrency:
+  group: hum-wake
+  cancel-in-progress: false
+jobs:
+  wake:
+    uses: ./.github/workflows/hum-wake.yml
+    secrets: inherit
