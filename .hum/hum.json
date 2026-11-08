@@ -138,6 +138,7 @@
 		"check"
 	],
 	"checks": [
+		"bun install --frozen-lockfile",
 		"bun run check"
 	],
 	"runPlaces": [
