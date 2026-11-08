@@ -4,6 +4,8 @@ on:
     secrets:
       CLAUDE_CODE_OAUTH_TOKEN:
         required: true
+      HUM_GITHUB_TOKEN:
+        required: false
 permissions:
   contents: write
   issues: write
@@ -14,10 +16,8 @@ jobs:
     timeout-minutes: 60
     env:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ secrets.HUM_GITHUB_TOKEN || github.token }}
       HUM_EVENT: ${{ github.event_name }}
-      HUM_KIND: ${{ vars.HUM_KIND }}
-      HUM_CHECKS: ${{ vars.HUM_CHECKS }}
     steps:
       - uses: actions/checkout@v4
         with:

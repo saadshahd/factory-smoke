@@ -81,82 +81,114 @@
 			"planning": {
 				"invoke": {
 					"src": "plan",
-					"onError": {
-						"target": "stuck"
-					}
+					"onError": [
+						{
+							"target": "stuck"
+						}
+					]
 				},
 				"on": {
-					"plan-ready": {
-						"target": "building"
-					},
-					"needs-split": {
-						"target": "done"
-					},
-					"plan-blocked": {
-						"target": "asking"
-					}
+					"plan-ready": [
+						{
+							"target": "building"
+						}
+					],
+					"needs-split": [
+						{
+							"target": "done"
+						}
+					],
+					"plan-blocked": [
+						{
+							"target": "asking"
+						}
+					]
 				}
 			},
 			"building": {
 				"invoke": {
 					"src": "build",
-					"onDone": {
-						"target": "checking"
-					},
-					"onError": {
-						"target": "stuck"
-					}
+					"onDone": [
+						{
+							"target": "checking"
+						}
+					],
+					"onError": [
+						{
+							"target": "stuck"
+						}
+					]
 				},
 				"on": {
-					"token-cap": {
-						"target": "asking"
-					}
+					"token-cap": [
+						{
+							"target": "asking"
+						}
+					]
 				}
 			},
 			"checking": {
 				"invoke": {
 					"src": "checks",
-					"onDone": {
-						"target": "reviewing"
-					},
-					"onError": {
-						"target": "fixing"
-					}
+					"onDone": [
+						{
+							"target": "reviewing"
+						}
+					],
+					"onError": [
+						{
+							"target": "fixing"
+						}
+					]
 				}
 			},
 			"fixing": {
 				"invoke": {
 					"src": "fix",
-					"onDone": {
-						"target": "checking"
-					},
-					"onError": {
-						"target": "stuck"
-					}
+					"onDone": [
+						{
+							"target": "checking"
+						}
+					],
+					"onError": [
+						{
+							"target": "stuck"
+						}
+					]
 				},
 				"on": {
-					"token-cap": {
-						"target": "asking"
-					}
+					"token-cap": [
+						{
+							"target": "asking"
+						}
+					]
 				}
 			},
 			"reviewing": {
 				"invoke": {
 					"src": "review",
-					"onError": {
-						"target": "stuck"
-					}
+					"onError": [
+						{
+							"target": "stuck"
+						}
+					]
 				},
 				"on": {
-					"approve": {
-						"target": "merging"
-					},
-					"request-changes": {
-						"target": "fixing"
-					},
-					"needs-owner": {
-						"target": "owner-review"
-					}
+					"approve": [
+						{
+							"target": "merging"
+						}
+					],
+					"request-changes": [
+						{
+							"target": "fixing"
+						}
+					],
+					"needs-owner": [
+						{
+							"target": "owner-review"
+						}
+					]
 				}
 			},
 			"owner-review": {
@@ -164,24 +196,32 @@
 					"owner-wait"
 				],
 				"on": {
-					"owner-approved": {
-						"target": "merging"
-					},
-					"owner-rejected": {
-						"target": "fixing"
-					}
+					"owner-approved": [
+						{
+							"target": "merging"
+						}
+					],
+					"owner-rejected": [
+						{
+							"target": "fixing"
+						}
+					]
 				},
 				"after": {
-					"86400000": {
-						"target": "stuck"
-					}
+					"259200000": [
+						{
+							"target": "stuck"
+						}
+					]
 				}
 			},
 			"merging": {
 				"on": {
-					"merged": {
-						"target": "done"
-					}
+					"merged": [
+						{
+							"target": "done"
+						}
+					]
 				}
 			},
 			"asking": {
@@ -189,14 +229,18 @@
 					"owner-wait"
 				],
 				"on": {
-					"answered": {
-						"target": "building"
-					}
+					"answered": [
+						{
+							"target": "building"
+						}
+					]
 				},
 				"after": {
-					"86400000": {
-						"target": "stuck"
-					}
+					"259200000": [
+						{
+							"target": "stuck"
+						}
+					]
 				}
 			},
 			"stuck": {
