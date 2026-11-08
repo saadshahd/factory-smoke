@@ -1,15 +1,71 @@
 {
 	"schemaVersion": 1,
 	"levels": [
-		"low",
-		"medium",
-		"high",
-		"critical"
+		{
+			"name": "low",
+			"review": "none",
+			"release": "at-once",
+			"onBreak": "follow-up"
+		},
+		{
+			"name": "medium",
+			"review": "agent",
+			"release": "at-once",
+			"onBreak": "follow-up"
+		},
+		{
+			"name": "high",
+			"review": "owner",
+			"release": "at-once",
+			"onBreak": "follow-up"
+		},
+		{
+			"name": "critical",
+			"review": "owner",
+			"release": "after-proof",
+			"onBreak": "block"
+		}
 	],
 	"paths": [
 		{
+			"glob": ".claude/**",
+			"level": "medium"
+		},
+		{
+			"glob": ".github/**",
+			"level": "high"
+		},
+		{
+			"glob": ".hum/**",
+			"level": "medium"
+		},
+		{
 			"glob": "docs/**",
 			"level": "low"
+		},
+		{
+			"glob": "scripts/**",
+			"level": "medium"
+		},
+		{
+			"glob": "src/**",
+			"level": "medium"
+		},
+		{
+			"glob": "test/**",
+			"level": "medium"
+		},
+		{
+			"glob": "vendor/**",
+			"level": "medium"
+		},
+		{
+			"glob": "*.md",
+			"level": "low"
+		},
+		{
+			"glob": "*",
+			"level": "medium"
 		}
 	],
 	"roles": {
@@ -81,31 +137,10 @@
 		"hotfix",
 		"check"
 	],
-	"runBranchPrefix": "hum/run/",
-	"claimPrefix": "hum/claim/",
-	"readyLabel": "hum:ready",
-	"mergeMethod": "squash",
-	"models": {
-		"light": "claude-haiku-5-5",
-		"standard": "claude-haiku-5-5",
-		"top": "claude-haiku-5-5"
-	},
-	"runners": 3,
-	"tickIntervalSeconds": 30,
-	"drainTimeoutSeconds": 300,
-	"claimExpirySeconds": 900,
-	"latestVersionCacheSeconds": 21600,
-	"maxFixRuns": 3,
-	"serviceLabel": "md.moo.hum",
-	"maxCrashes": 5,
-	"crashWindowSeconds": 600,
-	"workerDownTicks": 3,
-	"tokenWarnDays": 30,
-	"ciSchedule": "*/15 * * * *",
-	"ciTickCacheSeconds": 300,
-	"commitIdentity": {
-		"name": "hum",
-		"email": "hum@moo.md"
-	},
-	"itemsDir": ".hum/work"
+	"checks": [
+		"bun run check"
+	],
+	"runPlaces": [
+		"ci"
+	]
 }

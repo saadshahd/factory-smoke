@@ -81,51 +81,69 @@
 			"building": {
 				"invoke": {
 					"src": "build",
-					"onDone": {
-						"target": "checking"
-					},
-					"onError": {
-						"target": "stuck"
-					}
+					"onDone": [
+						{
+							"target": "checking"
+						}
+					],
+					"onError": [
+						{
+							"target": "stuck"
+						}
+					]
 				},
 				"on": {
-					"token-cap": {
-						"target": "asking"
-					}
+					"token-cap": [
+						{
+							"target": "asking"
+						}
+					]
 				}
 			},
 			"checking": {
 				"invoke": {
 					"src": "checks",
-					"onDone": {
-						"target": "merging"
-					},
-					"onError": {
-						"target": "fixing"
-					}
+					"onDone": [
+						{
+							"target": "merging"
+						}
+					],
+					"onError": [
+						{
+							"target": "fixing"
+						}
+					]
 				}
 			},
 			"fixing": {
 				"invoke": {
 					"src": "fix",
-					"onDone": {
-						"target": "checking"
-					},
-					"onError": {
-						"target": "stuck"
-					}
+					"onDone": [
+						{
+							"target": "checking"
+						}
+					],
+					"onError": [
+						{
+							"target": "stuck"
+						}
+					]
 				},
 				"on": {
-					"token-cap": {
-						"target": "asking"
-					}
+					"token-cap": [
+						{
+							"target": "asking"
+						}
+					]
 				}
 			},
 			"merging": {
 				"on": {
-					"merged": {
-						"target": "done"
-					}
+					"merged": [
+						{
+							"target": "done"
+						}
+					]
 				}
 			},
 			"asking": {
@@ -133,14 +151,18 @@
 					"owner-wait"
 				],
 				"on": {
-					"answered": {
-						"target": "building"
-					}
+					"answered": [
+						{
+							"target": "building"
+						}
+					]
 				},
 				"after": {
-					"86400000": {
-						"target": "stuck"
-					}
+					"259200000": [
+						{
+							"target": "stuck"
+						}
+					]
 				}
 			},
 			"stuck": {
